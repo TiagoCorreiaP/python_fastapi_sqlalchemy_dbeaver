@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 class MysqlConnectionHandler:
     def __init__(self):
         self.__session = None
-        self.__url = "mysql+pymysql://root:tiagocorreia@localhost:3306/teste"
+        self.__url = "mysql+pymysql://root:tiagocorreia@localhost:3307/teste"
         self.__engine = self.create_engine()
         
     def create_engine(self):
