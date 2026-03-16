@@ -17,4 +17,4 @@ class MysqlConnectionHandler:
         return self.__session
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.__session.close()    
+        self.__session.close()

@@ -5,10 +5,8 @@ from model import UserCreate
 app = FastAPI()
 
 @app.get('/search_by_email')
-def search_by_email(email):
-    email = UserRepository.get_email(email)
-    return email
-
+def search_by_email(user_email):
+    return UserRepository.get_email(user_email)
 
 @app.get('/')
 def read_all():
@@ -21,6 +19,7 @@ def deletar_by_id(id):
 @app.get('/search_by_id')
 def search_by_id(id):
     return UserRepository.get_id(id)
+
 
 @app.post('/create')
 def create_user_route(user_data: UserCreate):

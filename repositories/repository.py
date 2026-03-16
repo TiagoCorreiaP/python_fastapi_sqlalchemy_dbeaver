@@ -2,41 +2,31 @@ from sqlalchemy import text
 from setting.connection import MysqlConnectionHandler
 from repositories.repository import MysqlConnectionHandler
 from sqlalchemy.orm import session
-from model import User
+from model import User, UserCreate
 
 connection = MysqlConnectionHandler()
 
 class UserRepository():
     @staticmethod
-    def get_email(email):
+    def get_email(user_email: str):
         with connection as conn:
-            query=text(f"SELECT * FROM users WHERE email = '{email}'")
-            result = conn.execute(query).fetchone()
-            return result._mapping
+            return conn.query(User).filter(User.email == user_email).first()
                   
     @staticmethod
     def get_people_all():
         with connection as conn:
-            query=text(f"SELECT * FROM users")
-            result = conn.execute(query).fetchone()
-            return result._mapping
+            conn.query(User).filter(User.__name__).first()
 
     @staticmethod
-    def delete_people(id):
+    def delete_people(user_id: int):
         with connection as conn:
-            query=text(f"DELETE FROM users WHERE id = '{id}'")
-            result = conn.execute(query)
-
+            usuario = conn.query(User).filter(User.id == user_id).delete()
             conn.commit()
-            return result.mappings
 
     @staticmethod
-    def get_id(id):
+    def get_id(user_id: int):
         with connection as conn:
-            query=text(f"SELECT * FROM users WHERE id = '{id}'")
-            result = conn.execute(query).fetchone()
-
-            return result._mapping
+            return conn.query(User).filter(User.id == user_id).first()
     
     @staticmethod
     def create_user(user_data):
@@ -52,3 +42,4 @@ class UserRepository():
             conn.commit()
             conn.refresh(new_user)
             return new_user
+
