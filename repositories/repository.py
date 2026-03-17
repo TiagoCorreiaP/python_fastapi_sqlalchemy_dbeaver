@@ -45,4 +45,9 @@ class UserRepository():
             conn.commit()
             conn.refresh(new_user)
             return new_user
+        
+    @staticmethod
+    def get_profession(users_profession):
+        with connection as conn:
+            return conn.query(User).filter(User.profissao == users_profession).all()
 

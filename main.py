@@ -24,3 +24,7 @@ def search_by_id(id):
 @app.post('/create')
 def create_user_route(user_data: UserCreate):
     return UserRepository.create_user(user_data)
+
+@app.get("/profession")
+def search_by_profession(profession):
+    return UserRepository.get_profession(profession)
