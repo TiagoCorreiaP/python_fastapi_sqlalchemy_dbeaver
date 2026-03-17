@@ -2,7 +2,7 @@ from sqlalchemy import text
 from setting.connection import MysqlConnectionHandler
 from repositories.repository import MysqlConnectionHandler
 from sqlalchemy.orm import session
-from model import User, UserCreate
+from model import User
 
 connection = MysqlConnectionHandler()
 
@@ -10,12 +10,15 @@ class UserRepository():
     @staticmethod
     def get_email(user_email: str):
         with connection as conn:
-            return conn.query(User).filter(User.email == user_email).first()
+            return conn.query(User).filter(User.email == user_email).first() 
                   
     @staticmethod
     def get_people_all():
         with connection as conn:
-            conn.query(User).filter(User.__name__).first()
+            query=text(f"SELECT * FROM users")
+            result = conn.execute(query).fetchall()
+
+            return [row._mapping for row in result]  
 
     @staticmethod
     def delete_people(user_id: int):
